@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Squada+One&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+main {
+    /*@apply min-h-screen;*/
+}
+
+.o-title {
+    @apply text-4xl md:text-6xl text-center md:text-left font-secondary font-bold text-white uppercase;
+}
+
+.o-link {
+    @apply text-2xl uppercase cursor-pointer relative hover:opacity-70;
+}
+
+.o-link:before {
+    content: "";
+    @apply w-[0] h-[4px] absolute left-0 -bottom-0 bg-primary hidden md:block;
+    transition: .5s;
+    -webkit-transition: .5s;
+}
+
+.o-link:hover.o-link:before {
+    @apply w-full
+}
+
+
+.grecaptcha-badge{
+    opacity: 0;
+    z-index: -1;
+}
+
+body.active {
+    overflow: hidden;
+    scroll-behavior: smooth;
+}
+
+
+.c-deslize{
+    @apply text-white/50 uppercase font-medium w-full flex flex-col text-sm items-center gap-2 font-secondary lg:hidden;
+}
+
+.c-deslize__indicator {
+     @apply h-6 fill-white/40;
+     animation: floating 3s ease-in-out infinite;
+ }
+
+
+@keyframes floating {
+    0% {
+        transform: translate(0px, 0);
+        -webkit-transform: translate(0px, 0);
+        -o-transform: translate(0px, 0);
+        -ms-transform: translate(0px, 0);
+    }
+    50% {
+        transform: translate(15px, 0);
+        -webkit-transform: translate(15px, 0);
+        -o-transform: translate(15px, 0);
+        -ms-transform: translate(15px, 0);
+    }
+    100% {
+        transform: translate(0px, 0);
+        -webkit-transform: translate(0px, 0);
+        -o-transform: translate(0px, 0);
+        -ms-transform: translate(0px, 0);
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}

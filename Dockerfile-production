@@ -1,0 +1,125 @@
+# ------------------------------------------------------------------------
+# Manual das Variáveis de Ambiente:
+# ------------------------------------------------------------------------
+# NODE: Define a versão do Node.js a ser instalada. Exemplo: NODE=21
+# PHP: Define a versão do PHP a ser instalada. Exemplo: PHP=8.3
+# SWOOLE: Define se a extensão Swoole deve ser instalada. Valores: true/false
+# NPM: Define a versão do NPM a ser instalada. Exemplo: NPM=10.5.0
+# PORT: Define a porta na qual o Apache irá rodar. Exemplo: PORT=80
+# INSTALL_IMAGICK: Define se a extensão Imagick deve ser instalada. Valores: true/false
+# DEV: Define se ferramentas adicionais de desenvolvimento devem ser instaladas. Valores: true/false
+# SLEEP_TIME: Define o intervalo de tempo em segundos entre cada execução do comando schedule. Exemplo: SLEEP_TIME=60
+# UPLOAD_MAX_FILESIZE: Define o tamanho máximo de arquivos para upload no PHP. Exemplo: UPLOAD_MAX_FILESIZE=10M
+# POST_MAX_SIZE: Define o tamanho máximo de dados de post no PHP. Exemplo: POST_MAX_SIZE=10M
+# MAX_FILE_UPLOADS: Define o número máximo de arquivos para upload no PHP. Exemplo: MAX_FILE_UPLOADS=20
+# DISPLAY_ERRORS: Define se os erros devem ser exibidos no PHP. Valores: on/off
+# LOG_ERRORS: Define se os erros devem ser logados no PHP. Valores: on/off
+# TZ: Define o fuso horário do sistema. Exemplo: TZ=America/Bahia
+# ENABLE_SCHEDULE1-5: Define se o comando de schedule correspondente deve ser ativado. Valores: true/false
+# SCHEDULE_COMMAND1-5: Define o comando de schedule a ser executado.
+# ENABLE_QUEUE1-5: Define se o comando de queue:work correspondente deve ser ativado. Valores: true/false
+# QUEUE_COMMAND1-5: Define o comando de queue:work a ser executado.
+# ------------------------------------------------------------------------
+    FROM ubuntu:20.04
+
+    # Time Zone
+    ENV TZ=America/Bahia
+    RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+    ## Install php8.2.0
+    RUN apt update -y
+    RUN apt install software-properties-common -y
+    RUN apt install ca-certificates curl gnupg lsb-release -y
+    RUN apt install apache2 -y
+    RUN add-apt-repository ppa:ondrej/php -y
+    RUN apt update -y
+    RUN apt install php8.2 php8.2-common php8.2-mbstring php8.2-cli php8.2-bcmath php-json php8.2-xml php8.2-zip php8.2-pdo php8.2-common php8.2-tokenizer php8.2-pgsql php8.2-curl php8.2-gd php8.2-pdo -y
+
+    ## Install dependencias
+    RUN apt update && \
+        apt install git -y &&\
+        apt install curl -y && \
+        apt install -y tzdata && \
+        a2enmod rewrite
+
+    ### SET ALTERNATIVES PHP8.2
+    RUN update-alternatives --set php /usr/bin/php8.2
+
+    RUN curl -sS https://getcomposer.org/installer | php && \
+        mv composer.phar /usr/local/bin/composer && \
+        chmod +x /usr/local/bin/composer
+
+
+    RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+        apt update && \
+        apt install nodejs -y && \
+        npm install -g npm@10.2.2
+
+    ## Configuracao Supervisord e APACHE
+    RUN apt install supervisor -y && rm -rf /var/lib/apt/lists/*
+    COPY ./deploy.conf/supervisord.conf /etc/supervisor/
+    COPY ./deploy.conf/apache.conf /etc/supervisor/conf.d/
+    COPY ./deploy.conf/000-default.conf /etc/apache2/sites-available/
+
+    # Fix Security APACHE
+    RUN echo "ServerSignature Off" >> /etc/apache2/apache2.conf
+    RUN echo "ServerTokens Prod" >> /etc/apache2/apache2.conf
+    RUN echo "TraceEnable off"  >> /etc/apache2/apache2.conf
+    RUN echo "FileETag None"  >> /etc/apache2/apache2.conf
+
+    #Configuracao de Filas do Laravel
+    #COPY ./deploy.conf/fila_default.conf /etc/supervisor/conf.d/
+    #COPY ./deploy.conf/fila_services.conf /etc/supervisor/conf.d/
+    # COPY ./deploy.conf/fila_webhook.conf /etc/supervisor/conf.d/
+
+
+
+    ## Configurando as variaveis
+    WORKDIR /app
+
+    COPY . .
+
+    COPY env-production .env
+
+    EXPOSE 80
+
+    RUN composer install
+
+    #RUN touch .env \
+    ##   && php artisan key:generate
+
+   # RUN php artisan s3:build-backup
+
+    # RUN php artisan ziggy:generate
+    ## Montagem da Aplicacao NPM
+    RUN npm install && npm run build
+
+    ##Cache routes and config again
+    RUN php artisan cache:clear
+    RUN php artisan route:clear
+    RUN php artisan optimize:clear
+    RUN php artisan optimize
+    #RUN php artisan cloudfront:invalidate
+
+    ### Fix Permissao
+    RUN chmod -Rf 777 /app/storage
+    RUN chmod -Rf 777 /app/public
+    RUN chmod -Rf 777 /app/resources
+    RUN chmod -Rf 777 /app/routes
+
+    ## Fix Security
+    RUN rm -Rf /app/deploy.conf && \
+        rm -Rf /app/Dockerfile && \
+        rm -Rf /app/Dockerfile-staging && \
+        rm -Rf /app/Dockerfile-production && \
+        rm -Rf /app/docker-compose-production.yml && \
+        rm -Rf /app/docker-compose.yml && \
+        rm -Rf /app/env-production && \
+        rm -Rf /app/env-staging && \
+        rm -Rf /app/.env.example && \
+        rm -Rf /app/common_files && \
+        rm -Rf /app/.git && \
+        rm -Rf /app/.github
+
+    CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+

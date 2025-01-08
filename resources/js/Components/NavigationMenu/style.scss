@@ -1,0 +1,75 @@
+.c-nav {
+    @apply w-full flex items-center justify-center gap-10 md:gap-4 xl:gap-8;
+
+    &--vertical{
+        @apply gap-4 flex-col text-white items-start;
+    }
+
+    &__item{
+        @apply text-xl font-semibold lg:text-xl uppercase text-white leading-none cursor-pointer relative hover:opacity-70;
+
+        &:before{
+            content: "";
+            @apply w-[0] h-[4px] absolute left-0 -bottom-2 bg-tertiary md:bg-primary rounded-full;
+            transition: .5s;
+            -webkit-transition: .5s;
+        }
+
+        &:hover{
+            &:before{
+                @apply w-full;
+            }
+        }
+    }
+}
+
+.c-header-mb{
+    @apply  w-full fixed bottom-0  flex justify-center z-[10] gap-[2px] lg:hidden;
+
+    &__item{
+        @apply bg-secondary text-white flex-1 px-3 py-2.5 text-sm font-secondary font-medium flex flex-col justify-center items-center gap-0.5;
+    }
+
+    .o-hamburguer {
+
+        .trace{
+            @apply w-6 h-5 flex items-center justify-center rounded-full;
+
+            span {
+                @apply w-full h-[2px] bg-white relative rounded-full;
+                transition: 0.2s ease-in-out, top 0.2s ease-out;
+
+                &:before, &:after {
+                    content: "";
+                    @apply w-full h-full bg-white absolute left-0 rounded-full;
+                    transition: 0.2s ease-in-out, top 0.2s ease-out;
+                }
+
+                &:before {
+                    top: 6px;
+                }
+
+                &:after {
+                    bottom: 6px;
+                }
+            }
+        }
+
+        &.active {
+            .trace span {
+                background-color: transparent;
+                transition: 0.2s ease-out;
+
+                &:before {
+                    top: 0!important;
+                    transform: rotate3d(0, 0, 1, -45deg);
+                }
+
+                &:after {
+                    top: 0!important;
+                    transform: rotate3d(0, 0, 1, 45deg);
+                }
+            }
+        }
+    }
+}

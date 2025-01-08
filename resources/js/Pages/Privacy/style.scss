@@ -1,0 +1,77 @@
+.c-privacy{
+    @apply pb-8 pt-4 md:py-10 ;
+
+    &__header{
+        @apply flex flex-col md:flex-row gap-2 md:gap-4
+    }
+
+    &__banner{
+        @apply bg-primary rounded-2xl my-6 md:my-10; 
+
+        .banner-container{
+            @apply sm:flex items-center justify-between px-16 mx-auto max-w-[960px];
+        }
+    }
+
+    .title {
+        @apply text-black text-3xl md:text-4xl leading-tight font-bold tracking-[0.015em]; 
+    }
+
+    .btn-animacao{
+        position: relative;
+        transition: all .35s;
+        overflow: hidden;
+        cursor: pointer;
+
+    
+
+        &:after{
+            position: absolute;
+            content: "";
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 100%;
+            background: #FFE000;
+            transition: all .35s;
+          
+            
+          }
+
+          &:hover{
+
+            &:after{
+                left: 0;
+                right: auto;
+                width: 100%;
+            }
+        }
+
+        span{
+            position: relative;
+            z-index: 2;
+        }
+
+       
+    }
+
+    &__body{
+
+      
+    
+        .subtitle{
+            @apply text-black font-bold text-xl pb-5;
+        }
+    
+        .paragrafo{
+            @apply text-black text-base pb-5 leading-relaxed;
+        }
+    
+        .line{
+            @apply border-b border-[#d7d7d7] block w-full mb-5;
+        }
+
+    }
+
+
+}

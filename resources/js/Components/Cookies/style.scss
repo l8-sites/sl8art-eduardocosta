@@ -1,0 +1,48 @@
+.c-cookies {
+    bottom: -300px;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    z-index: 11;
+    -webkit-transition: 300ms ease-out;
+    transition: 300ms ease-out;
+
+    @media (max-width: 768px) {
+        bottom: -400px;
+    }
+
+    &__content {
+        width: 100%;
+        margin: 0 auto;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.showCookies {
+    bottom: 0;
+    -webkit-transition: 300ms ease-in;
+    transition: 300ms ease-in;
+}
+
+.bounce-enter-active {
+    animation: bounce-in 0.5s;
+}
+
+.bounce-leave-active {
+    animation: bounce-in 0.5s reverse;
+}
+
+@keyframes bounce-in {
+    0% {
+        top: 40%;
+        opacity: 0;
+    }
+
+    100% {
+        top: 50%;
+        opacity: 1;
+    }
+}

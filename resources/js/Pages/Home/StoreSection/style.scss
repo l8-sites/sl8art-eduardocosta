@@ -1,0 +1,19 @@
+.c-store{
+    @apply w-full pt-8 md:pt-10 relative;
+
+    &:before{
+        content: '';
+        @apply w-full h-4/6 absolute top-0 left-0 bg-primary z-[-1];
+    }
+
+    &__img{
+        @apply w-full aspect-[16/8] md:aspect-[16/5];
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+    }
+
+    &__box {
+        @apply bg-primary text-3xl md:text-5xl tracking-widest text-secondary w-10/12 md:w-9/12 p-3 md:p-5 flex items-center justify-center gap-3 md:gap-10 -mt-10 md:-mt-16 relative hover:scale-105 duration-200 ease-out hover:ease-in cursor-pointer
+    }
+}

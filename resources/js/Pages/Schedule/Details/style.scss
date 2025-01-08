@@ -1,0 +1,175 @@
+.container-carousel {
+
+    width: calc(100% - 140px);
+
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+}
+
+.nav-position {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+
+.c-list {
+    @apply flex flex-col gap-6 font-secondary;
+
+    &__item {
+        @apply text-xl md:text-lg font-semibold uppercase text-primary leading-tight ;
+
+        span {
+            @apply text-xl md:text-xl text-white font-normal uppercase;
+        }
+    }
+
+    &--right {
+        @apply items-start md:items-end;
+
+        .c-list__item {
+            @apply text-start md:text-right;
+        }
+
+        &\@md {
+            @media (max-width: 64em) {
+                @apply lg:items-end;
+
+                .c-list__item {
+                    @apply text-start md:text-left;
+                }
+            }
+        }
+    }
+
+
+}
+
+
+
+.c-schedule {
+    @apply bg-secondary w-full py-10 md:py-14 relative;
+
+    &__item {
+
+        position: relative;
+        height: 100%;
+
+        .bg-schedule {
+
+            border-radius: 10px;
+           
+
+        }
+
+
+        &--square {
+
+            @apply w-full;
+
+            .c-schedule {
+
+                &__month {
+                    @apply text-white text-3xl uppercase mt-2 ;
+                }
+
+                &__day {
+                    @apply pt-8 text-white text-[8.5rem] md:text-[.5rem] leading-[7.6rem] font-black uppercase;
+                }
+
+                &__state {
+                    @apply text-white text-5xl md:text-5xl font-bold;
+                }
+
+                &__city {
+                    @apply text-white  text-2xl md:text-2xl tracking-[.05em] uppercase;
+                }
+
+                &__corporate {
+                    @apply text-white text-2xl md:text-2xl tracking-[.05em] font-black uppercase;
+                }
+
+                &__details {
+                    @apply text-white text-sm font-black uppercase;
+                }
+            }
+
+
+        }
+    }
+
+    &__month {
+        @apply text-white text-base md:text-base font-medium tracking-[0.25rem] uppercase mb-2;
+    }
+
+    &__day {
+        @apply text-white text-8xl md:text-[7rem] font-semibold uppercase border-b-2 pb-5 border-white leading-none md:leading-[6.25rem] md:mb-2;
+
+    }
+
+    &__state {
+        @apply text-white text-3xl md:text-4xl font-light;
+    }
+
+    &__city {
+        @apply text-white text-lg md:text-lg tracking-[.05em] font-semibold uppercase;
+    }
+
+    &__corporate {
+        @apply text-white text-base md:text-lg tracking-[.15em] font-semibold uppercase;
+    }
+
+    &__details {
+        @apply  bg-black text-sm font-semibold uppercase text-white mx-auto  text-center  py-2.5 px-6 rounded-full;
+    }
+
+}
+
+
+
+.bg-schedule-details {
+    // background: #000 url("/images/bg-schedule-details.webp");
+    //background-repeat: no-repeat;
+    //background-position: top 30% center;
+    @apply h-[40vh] md:h-[30vh];
+    position: relative;
+
+    // &::before {
+
+    //     content: '';
+    //     height: 50%;
+    //     position: absolute;
+    //     bottom: 0;
+    //     left: 0;
+    //     width: 100%;
+    //     background: linear-gradient(to bottom, transparent, #000 90%, #000);
+
+    //     z-index: 1;
+
+    // }
+
+    // &::after {
+    //     @apply content-[''] absolute left-0 top-0 w-full h-full bg-black/40 z-[1];
+
+    // }
+
+    @media (max-width: 768px) {
+        // background: #000 url("/images/bg-mb-schedule-details.webp");
+        background-repeat: no-repeat;
+        // background-position: top 30% right;
+        background-size: 100% auto;
+        height: 40vh;
+    }
+
+}
+
+
+
+.swiper-nav-button {
+    @apply  text-fourth font-secondary font-semibold text-lg tracking-[.15em] cursor-pointer hover:opacity-70 relative;
+
+    
+}

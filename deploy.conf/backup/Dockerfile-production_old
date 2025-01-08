@@ -1,0 +1,145 @@
+FROM ubuntu:20.04
+
+# Definicao de versao
+ENV NODE=21
+ENV PHP=8.3
+ENV SWOOLE=false
+ENV NPM=10.5.0
+ENV PORT=80
+ENV INSTALL_IMAGICK=true
+ENV DEV=false
+
+# Variáveis de configuração do PHP
+ENV UPLOAD_MAX_FILESIZE=10M
+ENV POST_MAX_SIZE=10M
+ENV MAX_FILE_UPLOADS=20
+ENV DISPLAY_ERRORS=off
+ENV LOG_ERRORS=on
+
+#################### Sistema Operacional #################################
+# Time Zone
+ENV TZ=America/Bahia
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+## Install PHP
+RUN apt update -y
+RUN apt install software-properties-common -y
+RUN apt install apache2 -y
+RUN apt-get install ca-certificates curl gnupg lsb-release -y
+RUN add-apt-repository ppa:ondrej/php -y
+RUN apt update -y
+RUN apt install php${PHP} php${PHP}-common php${PHP}-mbstring php${PHP}-cli php${PHP}-bcmath php${PHP}-xml php${PHP}-zip php${PHP}-pdo php${PHP}-common php${PHP}-tokenizer php${PHP}-pgsql php${PHP}-curl php${PHP}-gd php${PHP}-pdo php${PHP}-dev php${PHP}-soap -y
+
+## Install IMAGICK (Optional)
+RUN if [ "$INSTALL_IMAGICK" = "true" ]; then \
+    apt update && \
+    apt install -y php${PHP}-imagick && \
+    apt install -y imagemagick; \
+    fi
+
+## Install dependencias
+RUN apt update && \
+    apt install git -y &&\
+    apt install curl -y && \
+    apt install -y tzdata && \
+    a2enmod rewrite
+
+### SET ALTERNATIVES
+RUN update-alternatives --set php /usr/bin/php${PHP}
+
+### COMPOSER
+RUN curl -sS https://getcomposer.org/installer | php && \
+    mv composer.phar /usr/local/bin/composer && \
+    chmod +x /usr/local/bin/composer
+
+### NODE AND NPM
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE}.x | bash - && \
+    apt update && \
+    apt install nodejs -y && \
+    npm install -g npm@${NPM}
+
+## Configuracao Supervisor
+RUN apt install supervisor -y && rm -rf /var/lib/apt/lists/*
+
+#################### Dependencias #################################
+
+### SWOOLE
+RUN if [ "$SWOOLE" = "true" ]; then \
+    cd /tmp && git clone https://github.com/swoole/swoole-src.git && \
+    cd swoole-src && \
+    git checkout v5.1.0 && \
+    phpize && \
+    ./configure --enable-openssl && \
+    make && make install && \
+    touch /etc/php/${PHP}/cli/conf.d/swoole.ini && \
+    echo 'extension=swoole.so' > /etc/php/${PHP}/cli/conf.d/swoole.ini; \
+    fi
+
+### Instalar ferramentas de desenvolvimento adicionais se DEV for true
+RUN if [ "$DEV" = "true" ]; then \
+    apt update && \
+    apt install -y net-tools telnet iputils-ping; \
+    fi
+
+########## Configuracoes para o funcionamento do supervisor #########
+COPY supervisord.conf /etc/supervisor/
+COPY apache.conf /etc/supervisor/conf.d/
+
+########## Configuracoes do APACHE #########
+RUN echo "ServerSignature Off" >> /etc/apache2/apache2.conf
+RUN echo "ServerTokens Prod" >> /etc/apache2/apache2.conf
+RUN echo "TraceEnable off"  >> /etc/apache2/apache2.conf
+RUN echo "FileETag None"  >> /etc/apache2/apache2.conf
+COPY ../000-default.conf /etc/apache2/sites-available/
+COPY ../php.ini /etc/php/${PHP}/cli/php.ini
+
+############ FIlas ##################
+COPY queue.conf /etc/supervisor/conf.d/
+COPY schedule.conf /etc/supervisor/conf.d/
+#COPY ./deploy.conf/reverb.conf /etc/supervisor/conf.d/
+#COPY ./deploy.conf/octane.conf /etc/supervisor/conf.d/
+
+## Configurando as variaveis
+WORKDIR /app
+
+COPY ../.. .
+
+COPY ../../env-production .env
+
+EXPOSE ${PORT}
+#Broadcasting PORT
+#EXPOSE 8080
+
+#ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN composer install --optimize-autoloader --no-dev
+
+RUN touch .env \
+    && php artisan key:generate --force
+
+## Montagem da Aplicacao NPM
+RUN npm install && npm run build
+
+##Cache routes and config again
+RUN php artisan optimize:clear && php artisan optimize
+
+### Fix Permissao
+RUN chmod -Rf 777 /app/storage
+
+## Fix Security
+RUN rm -Rf /app/deploy.conf && \
+    rm -Rf /app/Dockerfile-staging && \
+    rm -Rf /app/Dockerfile-production && \
+    rm -Rf /app/env-production && \
+    rm -Rf /app/env-staging && \
+    rm -Rf /app/common_files && \
+    rm -Rf /app/.git && \
+    rm -Rf /app/.github
+
+### PHP Configuration adjustments
+RUN sed -i "s/upload_max_filesize = .*/upload_max_filesize = ${UPLOAD_MAX_FILESIZE}/" /etc/php/${PHP}/cli/php.ini && \
+    sed -i "s/post_max_size = .*/post_max_size = ${POST_MAX_SIZE}/" /etc/php/${PHP}/cli/php.ini && \
+    sed -i "s/max_file_uploads = .*/max_file_uploads = ${MAX_FILE_UPLOADS}/" /etc/php/${PHP}/cli/php.ini && \
+    sed -i "s/display_errors = On/display_errors = ${DISPLAY_ERRORS}/" /etc/php/${PHP}/cli/php.ini && \
+    sed -i "s/log_errors = On/log_errors = ${LOG_ERRORS}/" /etc/php/${PHP}/cli/php.ini
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
