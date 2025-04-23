@@ -1,79 +1,74 @@
 @if(\Illuminate\Support\Facades\Route::currentRouteNamed('home'))
-    <link rel="preload" fetchpriority="high" as="image"
-          href="{{ $page['props']['siteConfig']['basic_configurations'] ? $page['props']['siteConfig']['basic_configurations'][0]['logo_cdn'] : '' }}"
-          type="image/svg+xml">
+<link rel="preload" as="image" href="{{ $page['props']['siteConfig']['site_configuration_people'] ? $page['props']['siteConfig']['site_configuration_people'][0]['bgdesk_home'] : '' }}" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="{{ $page['props']['siteConfig']['site_configuration_people'] ? $page['props']['siteConfig']['site_configuration_people'][0]['bgmobile_home'] : '' }}" type="image/webp" media="(max-width: 768px)" fetchpriority="high">
+<link rel="preload" fetchpriority="high" as="image" href="{{ $page['props']['siteConfig']['basic_configurations'] ? $page['props']['siteConfig']['basic_configurations'][0]['logo_cdn'] : '' }}" type="image/svg+xml">
 @endif
 
 @if(\Illuminate\Support\Facades\Route::currentRouteNamed('noticia'))
-    <link rel="preload" as="image" href="{{ $page['props']['news'] ? $page['props']['news']['image'] : '' }}" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="{{ $page['props']['news']['image'] }}" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="{{ $page['props']['news']['image'] }}" type="image/webp" media="(max-width: 768px)" fetchpriority="high">
 @endif
 
 <script type="application/ld+json">
     {
        "@type":"WebSite",
        "@context":"https://schema.org",
-       "name":"{{config('app.title')}}",
-       "description":"{{ $page['props']['siteConfig']['basic_configurations'] ? $page['props']['siteConfig']['basic_configurations'][0]['meta_description'] : ''}}",
+       "name":"{{$page['props']['siteConfig']['basic_configurations'][0]['meta_title']}}",
+        "alternateName": "Wagner Tintas",
+       "description":"{{$page['props']['siteConfig']['basic_configurations'][0]['meta_description']}}",
        "url":"{{url()->current()}}",
-       "logo":"{{ $page['props']['siteConfig']['basic_configurations'] ? $page['props']['siteConfig']['basic_configurations'][0]['logo'] : ''}}",
-       "sameAs": [
-        "{{$page['props']['siteConfig']['basic_configurations'] ? $page['props']['siteConfig']['basic_configurations'][0]['instagram'] : ''}}"
-      ]
+       "logo":"{{$page['props']['siteConfig']['basic_configurations'][0]['logo']}}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "{{url('')}}/buscar?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
   }
 </script>
 
-@if(\Illuminate\Support\Facades\Route::currentRouteNamed('agenda'))
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "MusicEvent",
-        "name": "{{ $page['props']['schedule']['name'] }}",
-        "startDate": "{{ $page['props']['schedule']['date'] }} T{{ $page['props']['schedule']['time'] }}",
-        "location": {
-            "@type": "Place",
-            "name": "{{ $page['props']['schedule']['local'] }}",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "{{ $page['props']['schedule']['city_name'] }}",
-                "addressRegion": "{{ $page['props']['schedule']['state_uf'] }}",
-                "addressCountry": "{{ $page['props']['schedule']['country_name'] }}"
-            }
-        },
-        "image": ["{{ $page['props']['siteConfig']['basic_configurations'][0]['meta_image'] }}"],
-        "description": "{{ $page['props']['schedule']['city_name'] }} - {{$page['props']['schedule']['state_uf'] }} contará com a presença de {{ $page['props']['siteConfig']['name'] }} dia {{ strtolower(data_completa($page['props']['schedule']['date'], 11)) }}!",
-         "offers": {
-                "@type": "Offer",
-                "url": "{{$page['props']['schedule']['link_sale']}}",
-                "availability": "https://schema.org/InStock"
-            },
-            "organizer": {
-                "@type": "Organization",
-                "name": "{{config('app.title')}}",
-                "url": "{{url('/agenda')}}"
-            }
-    }
-    </script>
-@endif
+@if(\Illuminate\Support\Facades\Route::currentRouteNamed('produto'))
 
-@if(\Illuminate\Support\Facades\Route::currentRouteNamed('noticia'))
-    <script type="application/ld+json">
+<script type="application/ld+json">
     {
-        "@type": "NewsArticle",
-        "@context": "https://schema.org",
-        "headline": "{{ preg_replace('/["`“”]/i', '', $page['props']['news']['title']) }}",
-        "image": [
-            "{{$page['props']['news']['image']}}"
-        ],
-        "datePublished": "{{$page['props']['news']['created_at']}}",
-        "dateModified": "{{$page['props']['news']['updated_at']}}",
-        "author": [{
-            "@type": "Person",
-            "name": "{{ $page['props']['news']['author'] ?? config('app.client') }}",
-            "url": "{{url('')}}"
-        }],
-        "publisher": [{
-          "name": "{{config('app.client')}}"
-        }]
+        "@context": "https://schema.org/",
+
+
+        "@type": "Product",
+
+
+        "name": "{{preg_replace('/["`“”]/i', '', $page['props']['product']['name'])}}",
+        "description": "Obs: Consultar a disponibilidade do produto em estoque com nossos atendentes.",
+
+
+        "image": "{{$page['props']['product']['image_cdn']}}",
+
+
+        "sku": "{{$page['props']['product']['id']}}",
+
+
+        "offers": {
+            "@type": "Offer",
+            "priceCurrency": "BRL",
+            "price": "{{number_format($page['props']['product']['price'] / 100, 2, '.', '')}}",
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": "https://schema.org/InStock",
+            "url": "{{ $_SERVER['HTTP_HOST'] . $page['url'] }}"
+        },
+
+
+        "category": "Tintas",
+
+
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.5",
+            "ratingCount": "100"
+        }
+
+
     }
-    </script>
+</script>
 @endif

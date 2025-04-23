@@ -1,0 +1,115 @@
+.c-hero {
+    background-size: cover !important;
+    width: 100%;
+    height: 100vh;
+    background-position: center;
+    justify-content: center;
+    position: relative;
+
+
+    &__deslize {
+        @apply relative flex flex-col items-center justify-end h-full;
+
+        @media(min-width:1200px) {
+
+        }
+    }
+
+}
+
+
+.c-hero::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+@media (min-width:64em) {
+    .c-hero::before {
+        background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8));
+        height: 150px;
+        z-index: 0;
+    }
+}
+
+.c-hero::after {
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+}
+
+
+.c-sidebar-mb {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    bottom: -100%;
+    visibility: hidden;
+    -webkit-transition: 200ms ease-in;
+    transition: 200ms ease-in;
+    z-index: -9;
+    flex-direction: row;
+    justify-content: flex-start;
+
+
+
+
+    @apply flex pb-[62px];
+
+    &.active {
+        bottom: 0;
+        visibility: visible;
+        z-index: 9;
+    }
+
+    .text-social{
+        @apply text-white text-3xl font-bold font-secondary tracking-[0.15rem];
+        text-orientation: mixed;
+        writing-mode: vertical-rl;
+        transform: rotate(-180deg);
+    }
+
+    &__box {
+        width: 80px;
+        height: calc(100% - 62px);
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .c-menu__text {
+            font-size: 2.0rem;
+            top: 50px;
+            font-weight: bold;
+                //position: absolute;
+                transform: rotate(-90deg);
+
+        }
+    }
+
+    &:before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.379);
+        background-blend-mode: overlay;
+        mix-blend-mode: normal;
+        backdrop-filter: blur(10px);
+        z-index: -1;
+
+        @media (min-width:1024px) {
+            @apply bg-white z-[-10];
+        }
+    }
+
+
+}

@@ -27,13 +27,13 @@ class CloudFrontInvalidate extends Command
     public function handle()
     {
         try {
-            $client_id = env('VITE_API_CLIENT_ID');
-            $result = CloudFront::invalidate(['/site/'.$client_id.'/build/*']);
-            if($result->toArray()['@metadata']['statusCode'] === 200 || $result->toArray()['@metadata']['statusCode'] === 201){
+            $client_id = config('app.client_id');
+            $result = CloudFront::invalidate(['/site/' . $client_id . '/build/*']);
+            if ($result->toArray()['@metadata']['statusCode'] === 200 || $result->toArray()['@metadata']['statusCode'] === 201) {
                 return Command::SUCCESS;
             }
             return Command::FAILURE;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return Command::FAILURE;
         }
     }

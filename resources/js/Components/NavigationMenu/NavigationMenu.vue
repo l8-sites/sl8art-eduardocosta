@@ -46,66 +46,68 @@ export default {
 </script>
 
 <template>
-    <nav v-if="!sidebar" class="c-nav" :class="orientation === 'vertical' ? 'c-nav--vertical' : ''">
-        <button type="button" class="c-nav__item" @click="goto('hero')">Home</button>
+    <nav v-if="!sidebar" class=" c-nav--vertical c-nav" >
+        <button type="button" class="c-nav__item " @click="goto('hero')" aria-label="Home">Home</button>
 
-        <button type="button" v-if="menu.includes('agenda')" class="c-nav__item" @click="goto('agenda', 70)">
-            Agenda
-        </button>
-
-        <button type="button" v-if="menu.includes('biografia')" class="c-nav__item" @click="goto('biography', 70)">
+        <button type="button" v-if="menu.includes('biografia')" class="c-nav__item" @click="goto('biography', 70)" aria-label="Biography">
             Biografia
         </button>
 
-        <button type="button" v-if="menu.includes('discografia')" class="c-nav__item" @click="goto('music', 70)">
+        <button type="button" v-if="menu.includes('discografia')" class="c-nav__item" @click="goto('music', 70)" aria-label="Music">
             Música
         </button>
 
-        <button type="button" v-if="menu.includes('video')" class="c-nav__item" @click="goto('video', 70)">
+        <button type="button" v-if="menu.includes('video')" class="c-nav__item" @click="goto('video', 70)" aria-label="Video">
             Vídeo
         </button>
 
-        <button type="button" v-if="menu.includes('social')" class="c-nav__item" @click="goto('social', 70)">
+        <button type="button" v-if="menu.includes('social')" class="c-nav__item" @click="goto('social', 70)" aria-label="Social">
             Social
         </button>
 
-        <button type="button" v-if="menu.includes('noticia')" class="c-nav__item" @click="goto('news', 70)">
+        <button type="button" v-if="menu.includes('noticia')" class="c-nav__item" @click="goto('news', 70)" aria-label="News">
             Notícias
         </button>
-<!-- 
-        <button type="button"  class="c-nav__item" @click="goto('gallery', 70)">
-            Fotos
-        </button> -->
 
-        <button type="button" v-if="menu.includes('central_fa')" class="c-nav__item" @click="goto('fa', 70)">
+        <button type="button"  class="c-nav__item" @click="goto('gallery', 70)" aria-label="Gallery">
+            Fotos
+        </button>
+
+        <button type="button" v-if="menu.includes('central_fa')" class="c-nav__item" @click="goto('fa', 70)" aria-label="Fas">
             Fãs
         </button>
 
-        <button type="button" v-if="menu.includes('contato')" class="c-nav__item" @click="goto('contact', -70)">
+        <button type="button" v-if="menu.includes('contato')" class="c-nav__item" @click="goto('contact', -70)" aria-label="Contact">
             Contato
         </button>
     </nav>
 
     <div class="c-header-mb" v-else>
 
-        <button type="button" class="c-header-mb__item" @click="goto('hero')">
-            <Icon name="icon-home" class="object-contain h-5 w-5 fill-white"></Icon>
+        <button type="button" class="c-header-mb__item" @click="goto('hero')" aria-label="home">
+            <Icon name="icon-home" class="object-contain w-5 h-5 fill-white"></Icon>
         Home
         </button>
-        
-        <button type="button" v-if="menu.includes('contato')" class="c-header-mb__item" @click="goto('contact', 70)">
-            <Icon name="icon-mail" class="object-contain h-5 w-5 stroke-white"></Icon>
-            Contato
+
+        <button type="button" v-if="menu.includes('contato')" class="c-header-mb__item" @click="goto('contact', 70)" aria-label="WhastsApp">
+            <Icon name="icon-whatsapp" class="object-contain w-5 h-5 fill-white"></Icon>
+            WhatsApp
         </button>
 
-        <button type="button" class="c-header-mb__item o-hamburguer" :class="[active ? 'active' : '']"
-                @click="$emit('toggle')">
+        <button type="button" v-if="true" class="c-header-mb__item" @click="goto('music', 70)" aria-label="Música">
+            <Icon name="icon-music" class="object-contain w-5 h-5 fill-white"/>
+            Música
+        </button>
+
+        <button type="button" class="h-12 c-header-mb__item o-hamburguer" :class="[active ? 'active' : '']"
+                @click="$emit('toggle')" aria-label="Menu">
             <div class="trace">
                 <span></span>
             </div>
             Menu
         </button>
     </div>
+
 </template>
 
 <style src="./style.scss" lang="scss" scoped/>

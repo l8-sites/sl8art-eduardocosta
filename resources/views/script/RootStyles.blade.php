@@ -1,8 +1,8 @@
 <style>
     :root {
         --primary: {{ $page['props']['siteConfig']['site_configuration_people'] ? $page['props']['siteConfig']['site_configuration_people'][0]['color_rgb_back_01'] : '' }};
-        --primary-light: {{ shadeColor($page['props']['siteConfig']['site_configuration_people'] ? $page['props']['siteConfig']['site_configuration_people'][0]['color_back_01'] : '', 30) }};
-        --primary-dark: {{ shadeColor($page['props']['siteConfig']['site_configuration_people'] ? $page['props']['siteConfig']['site_configuration_people'][0]['color_back_01'] : '', -30) }};
+        --primary-light: {{ shadeColor($page['props']['siteConfig']['site_configuration_people'] ? $page['props']['siteConfig']['site_configuration_people'][0]['color_back_01'] : '', 20) }};
+        --primary-dark: {{ shadeColor($page['props']['siteConfig']['site_configuration_people'] ? $page['props']['siteConfig']['site_configuration_people'][0]['color_back_01'] : '', -20) }};
         --primary-bw: {{luminosity($page['props']['siteConfig']['site_configuration_people'] ? $page['props']['siteConfig']['site_configuration_people'][0]['color_back_01'] : '')}};
 
         --secondary: {{ $page['props']['siteConfig']['site_configuration_people'] ? $page['props']['siteConfig']['site_configuration_people'][0]['color_rgb_back_02'] : ''}};
