@@ -1,0 +1,18 @@
+.c-gallery {
+    @apply w-full pt-12 md:pt-14  md:pb-64 relative;
+
+
+    &::before {
+        @apply content-[''] absolute left-0 top-0 w-full h-full bg-black/20 z-[0];
+    }
+
+    .container-gallery {
+        @apply relative w-full;
+
+        // &::before{
+
+        //     @apply content-[''] absolute left-[50%] top-[50%] w-[calc(100%-2rem)] h-[calc(100%-8rem)] translate-y-[-50%] translate-x-[-50%] bg-orange-light/20 border border-orange/40 rounded-3xl;
+        // }
+    }
+
+}

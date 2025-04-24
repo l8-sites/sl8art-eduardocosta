@@ -165,7 +165,7 @@ export default {
         <div class="py-5 text-center bg-black c-music">
             <div class="container">
                 <div class="flex items-center justify-between pt-10 mb-10 o-column">
-                    <h2 class="text-4xl lg:text-6xl o-headline aos-init aos-animate" data-aos="fade-up" data-aos-easing="ease" data-aos-delay="200">MÚSICA</h2>
+                    <h2 class="text-4xl lg:text-6xl o-title aos-init aos-animate" data-aos="fade-up" data-aos-easing="ease" data-aos-delay="200">MÚSICA</h2>
                     <div data-aos="fade-up" data-aos-easing="ease" data-aos-delay="300" class="aos-init aos-animate ">
                         <Icon name="icon-spotify" data-aos-easing="ease" data-aos-delay="300" class="hidden md:w-64 md:h-24 w-9 h-9 lg:block fill-[#1db954] "/>
                         <Icon name="icon-spotify-round" class="block lg:hidden w-12 h-12 fill-[#1db954] bg-black rounded-full stroke-black"/>

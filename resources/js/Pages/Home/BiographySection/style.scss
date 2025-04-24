@@ -1,0 +1,54 @@
+.scroll-container {
+    height: 400px;
+    @apply w-full overflow-y-scroll p-2.5;
+    // overflow é a barra de rolagem
+    @media(min-width:1024px) {
+        height: 500px;
+    }
+}
+
+  /* Estilizando a barra de rolagem */
+  .scroll-container::-webkit-scrollbar {
+    @apply w-1.5; /* Largura da barra */
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb {
+    // background: #888; /* Cor do "polegar" */
+    // border-radius: 4px; /* Cantos arredondados */
+    @apply bg-[#888] rounded;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb:hover {
+    background: var(--tertiary); /* Cor ao passar o mouse */
+  }
+
+  .scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Cor do trilho */
+  }
+
+.c-biography {
+    background:  linear-gradient(90deg, #000000 39%, rgba(var(--secondary)) 97%);
+    position: relative;
+    height: 100%;
+}
+
+.c-biography:before {
+    content: "";
+    width: 55%;
+    height: 30.7%;
+    position: absolute;
+    top: 10%;
+    left: 0;
+    background-color: rgba(var(--primary));
+    z-index: 0;
+}
+
+@media (min-width: 64em) {
+    .c-biography:before {
+        width: 35%;
+        height: 75%;
+        top: initial;
+        bottom: 0;
+        left: 0;
+    }
+}

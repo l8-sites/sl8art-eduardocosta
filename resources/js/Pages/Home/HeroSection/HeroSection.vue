@@ -1,23 +1,17 @@
 <script>
-import NavigationMenu from "@/Components/NavigationMenu/NavigationMenu.vue";
-// import SocialMenu from "@/Components/SocialMenu/SocialMenu.vue";
+
 import { Link } from '@inertiajs/inertia-vue3';
-import { defineAsyncComponent, defineComponent } from 'vue'
-// import Icon from "@/Components/Icon/Icon.vue";
+import Icon from "@/Components/Icon/Icon.vue";
 import { useMediaQuery } from '@vueuse/core'
-// const NavigationMenu = defineAsyncComponent(() => import('@/Components/NavigationMenu/NavigationMenu.vue'))
-const SocialMenu = defineAsyncComponent(() => import('@/Components/SocialMenu/SocialMenu.vue'))
-const Icon = defineAsyncComponent(() => import('@/Components/Icon/Icon.vue'))
-const Header = defineAsyncComponent(() => import('@/Components/Header/Header.vue'))
+
 
 export default {
 
     components: {
-        NavigationMenu,
-        SocialMenu,
+
         Icon,
-        Link,
-        Header
+        Link
+
     },
     data() {
         return {
@@ -32,34 +26,25 @@ export default {
         }
     },
     computed: {
-        background () {
+        background() {
             return this.tela < 1024 ? this.bgMobile : this.bgDesktop;
         }
     },
-    mounted() {
-        window.addEventListener("resize", this.updateScreenWidth);
-    },
-    beforeUnmount() {
-        window.removeEventListener("resize", this.updateScreenWidth);
-    },
-    methods: {
-        updateScreenWidth() {
-            this.tela = window.innerWidth;
-        }
-    }
+
 
 }
 </script>
 
 <template>
-    <section class="relative c-hero" id="hero" :style="{'background-image': background}">
+    <section class="c-hero" id="hero" :style="{ 'background-image': background }">
 
         <div class="container relative h-full">
 
             <div class="c-hero__deslize">
-                <p class="z-[1] leading-6  text-primary font-semibold text-sm md:text-base tracking-wide mb-1.5">Deslize para navegar</p>
+                <p class="z-[1] leading-6  text-white font-normal text-sm md:text-base tracking-wider mb-1.5">Deslize
+                    para navegar</p>
                 <div class="flex justify-center z-1 c-home__icon-down z-[3]">
-                    <Icon name="icon-down" class="w-8 h-8 fill-primary"/>
+                    <Icon name="icon-down" class="w-7 h-7 fill-primary" />
                 </div>
             </div>
         </div>
