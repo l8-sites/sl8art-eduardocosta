@@ -25,7 +25,7 @@ export default {
         ProgressBar,
         Tags,
         Link,
-      
+
     },
     props: {
         news: Object,
@@ -68,23 +68,23 @@ export default {
     <Head :title="titleNews"/>
 
     <App>
-        <section class="md:pt-8 md:pb-16 pb-12 bg-black text-section">
+        <section class="md:pt-8 md:pb-16 pb-12 relative bg-secondary md:z-0 z-[11] text-section">
             <div class="max-w-2xl mx-auto ">
                 <div class="w-full grid grid-cols-1 gap-8">
                     <div class="flex flex-col gap-3 md:pt-0">
                         <div class="order-1 md:order-3">
                             <template v-if="news.image && news.video == null">
 
-                                <figure class="c-news__image c-news__image--shadow">
-                                    <img :src="news.image_cdn" :alt="news.title" width="768" height="580" class="object-cover object-top"/>
+                                <figure class="c-news__image c-news__image--shadow md:block hidden">
+                                    <img :src="news.image_cdn" :alt="news.title" width="768" height="580" class="object-cover object-top md:block hidden"/>
                                 </figure>
 
-                                <div class="c-news__caption" v-if="news.image_subtitle || news.image_source">
-                                        <span v-if="news.image_subtitle" class="text-sm text-white uppercase font-semibold">
+                                <div class="c-news__caption" v-if="news.image_subtitle || news.image_source" >
+                                        <span v-if="news.image_subtitle" class="text-sm text-white uppercase font-semibold md:block hidden">
                                             {{ news.image_subtitle }}
                                         </span>
 
-                                    <span v-if="news.image_source" class="text-xs text-white ">
+                                    <span v-if="news.image_source" class="text-xs text-white md:block hidden">
                                             Fonte: {{ news.image_source }}
                                         </span>
                                 </div>
@@ -96,7 +96,7 @@ export default {
                         </div>
 
                         <div class="order-2 md:order-1 px-5 md:px-0">
-                        
+
                             <div v-if="news.emphasis" class="md:hidden w-full mb-3 flex">
                                 <p class="bg-primary text-black  text-sm uppercase font-black py-[6px] px-4 mx-auto">
                                     Exclusivo
@@ -104,7 +104,7 @@ export default {
                             </div>
 
                             <h1 v-if="news.title"
-                                class="font-bold text-white text-3xl md:text-4xl lg:leading-[1.15] text-center md:text-left order-3 md:order-2 mb-6">
+                                class="font-bold text-[#CF2151] text-3xl md:text-4xl lg:leading-[1.15] text-center md:text-left order-3 md:order-2 mb-6">
                                 {{ news.title }}
                             </h1>
 
@@ -167,13 +167,13 @@ export default {
 
                         <RelatedNews v-if="newsTags.length > 0" :related="newsTags" class="order-10"/>
 
-                        <a :href="route('noticias')" class="text-sm md:text-sm border mx-4 md:mx-0 px-4 py-3 rounded-md font-bold text-primary uppercase text-center mt-7 tracking-widest block order-11">
+                        <a :href="route('noticias')" class="text-sm bg-primary md:text-sm border mx-4 md:mx-0 px-4 py-3 rounded-md font-bold text-white uppercase text-center mt-7 tracking-widest block order-11">
                             Veja mais notícias
                         </a>
                     </div>
                 </div>
 
-           
+
             </div>
         </section>
 

@@ -143,8 +143,8 @@ export default {
             }
 
              const userProfile = await spotify('followers');
-    
-            
+
+
             if (userProfile && userProfile.images && userProfile.images.length > 0) {
                 this.profileImage = userProfile.images[0].url; // Armazena a foto de perfil
             } else {
@@ -164,9 +164,9 @@ export default {
     <section id="music">
         <div class="py-5 text-center bg-black c-music">
             <div class="container">
-                <div class="flex items-center justify-between pt-10 mb-10 o-column">
-                    <h2 class="text-4xl lg:text-6xl o-title aos-init aos-animate" data-aos="fade-up" data-aos-easing="ease" data-aos-delay="200">MÚSICA</h2>
-                    <div data-aos="fade-up" data-aos-easing="ease" data-aos-delay="300" class="aos-init aos-animate ">
+                <div class="flex items-center justify-between pt-10 mb-10 o-column" data-aos="fade-up" data-aos-delay="400">
+                    <h2 class="text-4xl lg:text-6xl o-title aos-init aos-animate" data-aos="fade-up" data-aos-delay="400">MÚSICA</h2>
+                    <div data-aos="fade-up" data-aos-easing="ease" data-aos-delay="300" class="aos-init aos-animate" >
                         <Icon name="icon-spotify" data-aos-easing="ease" data-aos-delay="300" class="hidden md:w-64 md:h-24 w-9 h-9 lg:block fill-[#1db954] "/>
                         <Icon name="icon-spotify-round" class="block lg:hidden w-12 h-12 fill-[#1db954] bg-black rounded-full stroke-black"/>
                     </div>
@@ -174,16 +174,17 @@ export default {
 
 
 
-                <div class="flex mt-6 mb-8 md:mt-12 md:mb-12">
+                <div class="flex mt-6 mb-8 md:mt-12 md:mb-12 items-start">
                     <div class="relative left-0 flex top-4">
-                        <div class="flex-col items-center hidden lg:flex aos-init aos-animate" data-aos="fade-up" data-aos-easing="ease" data-aos-delay="200">
+                        <div class="flex-col items-center lg:flex aos-init aos-animate" data-aos="fade-up" data-aos-delay="700">
                             <div class="mr-10 xl:mr-0" v-if="imageAlbum" >
-                                <figure class="w-24 h-24 mb-5 overflow-hidden rounded-full lg:w-36 lg:h-36">
+                                <figure class="w-24 h-24 mb-5 md:block hidden overflow-hidden rounded-full lg:w-44 lg:h-44">
                                     <img class="object-cover lazy" :src="profileImage" alt="Marcello Teodoro" loading="lazy">
                                 </figure>
-                                <div class="absolute flex justify-between top-48">
-                                    <a :href="config.spotify" target="_blank" class="c-button o-btn-spotify" tabindex="1">ACESSAR</a>
-                                </div>
+                                <a :href="config.spotify" target="_blank"
+                                   class="px-9 py-2 font-semibold text-white md:relative absolute md:top-auto top-72 left-24 md:left-0 uppercase rounded-full w-max bg-success">
+                                    Seguir
+                                </a>
                             </div>
                         </div>
 
@@ -191,8 +192,8 @@ export default {
 
                     </div>
 
-                    <swiper class="flex-1 pb-20" v-if="true" ref="swiper" :effect="'fade'" :keyboard="true" :slidesPerView="1.5" :spaceBetween="0" :allowTouchMove="true"
-                        :grabCursor="true" :centeredSlides="false" :loop="false" slideActiveClass="active"
+                    <swiper class="flex-1 pt-5 pb-20 pl-2 pr-2" v-if="true" ref="swiper" :effect="'fade'" :keyboard="true" :slidesPerView="1" :spaceBetween="0" :allowTouchMove="true"
+                        :grabCursor="true" :centeredSlides="false" :loop="true" slideActiveClass="active"
                         :navigation="{nextEl: '.custom-next-button', prevEl: '.custom-prev-button'}"
                         :breakpoints="breakpoints" :modules="modules">
 
@@ -200,14 +201,14 @@ export default {
                             <div class="flex flex-col ">
                                 <button v-if="item.images" type="button"
                                     @click="iframeHtml(item.id, item.images[0].url, item.name)"
-                                    class="top-0 hidden lg:block c-streaming__link" :aria-label="item.name">
-                                    <img :src="item.images[1].url" :alt="item.name" width="300" height="300" loading="lazy">
+                                    class="hidden lg:block c-streaming__link " :aria-label="item.name">
+                                    <img :src="item.images[1].url" class="rounded-md scale-150 md:scale-110 " :alt="item.name" width="400" height="400" loading="lazy">
                                 </button>
 
                                 <a v-if="item.images" :href="item.external_urls.spotify" target="_blank"
-                                    class="flex content-between justify-center lg:hidden" :aria-label="item.name">
+                                    class="flex content-between  lg:hidden" :aria-label="item.name">
 
-                                    <img :src="item.images[1].url" :alt="item.name" width="300" height="300" class="c-streaming__link" loading="lazy">
+                                    <img :src="item.images[1].url" :alt="item.name" width="300" height="300" class="c-streaming__link " loading="lazy">
 
                                     <button color="green" type="a" :href="item.external_urls?.spotify" target="_blank" class="c-button__play" aria-label="play">
                                         PLAY
@@ -220,12 +221,12 @@ export default {
 
                     </swiper>
 
-                    <div class="relative right-0 z-[3] md:top-28 top-60">
-                        <button type="button" @click="goPrev" class="swiper-nav-button right-5 custom-next-button" aria-label="goPrev">
-                            <Icon name="icon-caret-right" class="w-6 h-6 pl-2 fill-primary"/>
+                    <div class="relative right-0 z-[3] md:top-52 top-60">
+                        <button type="button" @click="goPrev" class="swiper-nav-button relative top-24 md:top-0 -right-6 md:right-5 custom-next-button" aria-label="goPrev">
+                            <Icon name="icon-caret-right" class="w-6 h-6 pl-2 fill-white"/>
                         </button>
-                        <button type="button" @click="goNext" class=" swiper-nav-button right-36 custom-prev-button" aria-label="goNext">
-                            <Icon name="icon-caret-left" class="w-6 h-6 pr-2 fill-primary"/>
+                        <button type="button" @click="goNext" class=" swiper-nav-button relative top-24 md:top-0 right-80  md:right-24 custom-prev-button" aria-label="goNext">
+                            <Icon name="icon-caret-left" class="w-6 h-6 pr-2 fill-white"/>
                         </button>
                     </div>
 
@@ -234,28 +235,28 @@ export default {
             </div>
         </div>
 
-        <div class="items-center justify-center h-full gap-5 py-5 text-center md:flex">
+        <div class="md:items-center items-center justify-center bg-primary h-full gap-5 py-5 text-center md:flex md:flex-row ">
             <p class="text-white ">OUÇA TAMBÉM NA SUA PLATAFORMA PREFERIDA</p>
-            <ul class="c-streaming">
+            <ul class="c-streaming items-center justify-center relative flex flex-row gap-4 ">
                 <li v-if="config.link_deezer">
                     <button type="button" @click="socialClick(config.link_deezer, 'deezer')" class="c-streaming__link"
                         aria-label="Deezer">
-                        <Icon name="icon-deezer" class="hidden h-7 md:block fill-white" />
-                        <Icon name="icon-deezer-symbol" class="w-6 h-6 fill-white md:hidden" />
+                        <Icon name="icon-deezer" class="hidden h-7 md:block fill-white hover:scale-105" />
+                        <Icon name="icon-deezer-symbol" class="w-6 h-6 fill-white md:hidden " />
                     </button>
                 </li>
 
                 <li v-if="config.link_music">
                     <button type="button" @click="socialClick(config.link_music, 'apple_music')"
                         class="c-streaming__link" aria-label="Apple Music">
-                        <Icon name="icon-applemusic" class="hidden h-6 md:block fill-white" />
+                        <Icon name="icon-applemusic" class="hidden h-5 md:block fill-white hover:scale-105" />
                         <Icon name="icon-applemusic-symbol" class="w-6 h-6 md:hidden fill-white" />
                     </button>
                 </li>
                 <li v-if="config.link_youtube_music">
                     <button type="button" @click="socialClick(config.link_youtube_music, 'youtube_music')"
                         class="c-streaming__link" aria-label="Youtube Music">
-                        <Icon name="icon-youtubemusic" class="hidden h-5 md:block fill-white" />
+                        <Icon name="icon-youtubemusic" class="hidden h-5 md:block fill-white hover:scale-105" />
                         <Icon name="icon-youtubemusic-symbol" class="w-6 h-6 fill-white md:hidden" />
                     </button>
                 </li>
@@ -263,16 +264,16 @@ export default {
 
                 <li v-if="config.link_tidal">
                     <button type="button" @click="socialClick(config.link_tidal, 'tidal')" class="c-streaming__link"
-                        aria-label="amazon-music">
-                        <Icon name="amazon-music" class="hidden h-8 md:block fill-white" />
-                        <Icon name="amazon-music" class="h-7 w-7 fill-white md:hidden" />
+                        aria-label="Tidal">
+                        <Icon name="icon-tidal" class="hidden h-5 md:block fill-white hover:scale-105" />
+                        <Icon name="icon-tidal-symbol" class="h-6 w-6 fill-white md:hidden" />
                     </button>
                 </li>
 
                 <li v-if="config.link_napster">
                     <button type="button" @click="socialClick(config.link_napster, 'napster')" class="c-streaming__link"
                         aria-label="Napster">
-                        <Icon name="icon-napster" class="hidden h-7 md:block fill-white" />
+                        <Icon name="icon-napster" class="hidden h-6 md:block fill-white hover:scale-105" />
                         <Icon name="icon-napster-symbol" class="w-6 h-6 fill-white md:hidden" />
                     </button>
                 </li>

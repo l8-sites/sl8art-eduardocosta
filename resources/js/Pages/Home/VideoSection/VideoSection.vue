@@ -105,13 +105,13 @@ export default {
 <template>
     <section id="video" class="c-video">
         <div class="container max-w-6xl  relative">
-            <h2 class="o-title text-white md:text-8xl  text-center mb-6 md:mb-8">
+            <h2 class="o-title text-white md:text-8xl  text-center mb-6 md:mb-8" data-aos="fade-up" data-aos-delay="400">
                 Vídeos
             </h2>
             <div class="box-video">
 
-               <div v-if="videoVisible" class="absolute z-[0] top-[0.625rem] left-[0.625rem] w-[calc(100%-1.25rem)] h-[calc(100%-1.25rem)] ">
-                    <iframe class="w-full h-full "
+               <div v-if="videoVisible" class="absolute z-[0] top-[0.625rem] left-[0.625rem] w-[calc(100%)] md:w-[calc(100%-1.25rem)] h-[calc(100%-1.25rem)] ">
+                    <iframe class=" w-screen md:w-full md:h-full "
                         :src="'https://www.youtube.com/embed/' + video_fixed?.youtubeid + '?autoplay=1'"
                         title="video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
@@ -124,7 +124,7 @@ export default {
                         class="icon-play" />
                 </button>
 
-              
+
 
             </div>
             <!-- <div class="relative flex items-center justify-center w-full aspect-[16/9] bg-white p-2 z-[2]">

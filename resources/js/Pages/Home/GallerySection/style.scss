@@ -1,18 +1,90 @@
 .c-gallery {
-    @apply w-full pt-12 md:pt-14  md:pb-64 relative;
-
+    @apply w-full relative;
+    background-image: url('/images/fundo_fotos.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
     &::before {
-        @apply content-[''] absolute left-0 top-0 w-full h-full bg-black/20 z-[0];
+        @apply content-[''] absolute left-0 top-0 h-[90%] z-[0];
     }
 
     .container-gallery {
         @apply relative w-full;
 
-        // &::before{
+         &::before{
 
-        //     @apply content-[''] absolute left-[50%] top-[50%] w-[calc(100%-2rem)] h-[calc(100%-8rem)] translate-y-[-50%] translate-x-[-50%] bg-orange-light/20 border border-orange/40 rounded-3xl;
-        // }
+            @apply content-[''] absolute left-[50%] top-[47%] w-[calc(100%)] h-[calc(100%-8rem)] translate-y-[-50%] translate-x-[-50%] ;
+         }
+    }.c-gallery {
+         @apply w-full relative;
+         background-image: linear-gradient(to top left, rgb(var(--primary)) , rgb(var(--secondary), ));
+
+         &::before {
+             @apply content-[''] absolute left-0 top-0 w-full h-full z-[0];
+         }
+
+         .container-gallery {
+             @apply relative w-full;
+
+              &::before{
+
+                  @apply content-[''] absolute left-[50%] top-[50%] w-[calc(100%)] h-[calc(100%-8rem)] translate-y-[-50%] translate-x-[-50%] bg-orange-light/20 border border-orange/40 rounded-3xl;
+              }
+         }
+
+
+         &__title {
+             position: relative;
+
+             &:before {
+                 content: '|';
+                 position: absolute;
+                 bottom: 0.85rem;
+                 left: -25px;
+                 width: calc(100% + 4rem);
+                 font-size: 1rem;
+                 line-height: 1.25rem;
+                 padding: 0.25rem 1rem;
+                 border: 2px solid orangered ;
+                 z-index: 0;
+                 color: transparent;
+                 @media (max-width: 768px) {
+                     bottom: 0.65rem;
+                     line-height: 0.08rem;
+                 }
+             }
+         }
+     }
+
+    .swiper-button-disabled {
+        visibility: visible;
     }
 
+
+    &__title {
+        position: relative;
+
+        &:before {
+            content: '|';
+            position: absolute;
+            bottom: 0.85rem;
+            left: -15px;
+            width: calc(100% + 4rem);
+            font-size: 1rem;
+            line-height: 1.25rem;
+            padding: 0.25rem 1rem;
+            border: 2px solid ;
+            z-index: 0;
+            color: transparent;
+            @media (max-width: 768px) {
+                bottom: 0.65rem;
+                line-height: 0.08rem;
+            }
+        }
+    }
+}
+
+.swiper-button-disabled {
+    visibility: visible;
 }

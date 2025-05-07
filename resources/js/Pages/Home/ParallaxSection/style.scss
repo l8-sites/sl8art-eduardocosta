@@ -1,0 +1,12 @@
+.c-parallax {
+    position: relative;
+    overflow: hidden;
+    background-color: black;
+    display: block;
+    height: 100vh;
+
+    @media (max-width: 768px) {
+        background-attachment: inherit;
+        display: none;
+    }
+}

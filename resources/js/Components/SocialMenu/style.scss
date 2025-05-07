@@ -6,11 +6,11 @@
     }
 
     &__item{
-        @apply text-3xl	text-fourth uppercase cursor-pointer relative hover:opacity-70;
+        @apply text-3xl	text-colorprimary uppercase cursor-pointer relative hover:opacity-70;
 
         &:before{
             content: "";
-            @apply w-[0] h-[4px] absolute left-0 -bottom-0 bg-primary;
+            @apply w-[0] h-[4px] absolute left-0 -bottom-0 bg-colorprimary;
             transition: .5s;
             -webkit-transition: .5s;
         }

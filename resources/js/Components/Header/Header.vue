@@ -108,14 +108,18 @@ export default defineComponent({
     <header>
         <div class="c-header" :class="[scrollActive ? 'active' : '']">
             <div class="container relative">
-                <div class="grid grid-cols-3">
+                <div class="grid md:grid-cols-3 grid-cols-1 ">
 
 
                     <a href="/">
-                        <img :src="basic.logo_cdn" class="object-contain object-left h-0 transition-all duration-300 ease-in-out" :class="[scrollActive ? ' md:h-10' : 'md:h-12']"
-                            :alt="'Logo ' + basic.meta_title_cdn" fetchpriority="high" />
+                        <img :src="basic.logo_cdn" class="md:object-contain md:w-1/5 w-4/5 h-full md:scale-100 relative md:absolute left-10 md:left-0 md:top-0 top-32 object-contain md:object-left transition-all duration-300 ease-in-out" :class="[scrollActive ? ' md:h-10' : ' md:h-12']"
+                            :alt="'Logo'+ basic.meta_title" fetchpriority="high"/>
 
                     </a>
+                    <img :src="basic.logo_cdn"
+                         class="h-20 w-20 bg-red-500 border hidden border-white"
+                         :alt="'Logo ' + basic.meta_title_cdn" />
+
 
                     <button type="button" class="c-header__item o-hamburguer mx-auto"
                         :class="[isActive ? 'active' : '']" @click="toggleHumburger">
@@ -125,12 +129,12 @@ export default defineComponent({
 
                     </button>
 
-                    <SocialMenu class="ml-auto" />
+                    <SocialMenu class="ml-auto hidden" />
                 </div>
             </div>
         </div>
 
-        <div class="fixed right-0 px-3 py-4 top-36 bg-secondary hidden z-[12]">
+        <div class="fixed right-0 px-3 py-4 top-36 bg-secondary hidden">
             <SocialMenu />
         </div>
 
@@ -146,11 +150,11 @@ export default defineComponent({
 
 
                 <a href="https://l8.digital" target="_blank"
-                    class="border-t border-secondary/20 w-screen absolute bottom-0 left-[50%] translate-x-[-50%] ">
+                    class="border-t border-white-light bg-secondary w-screen absolute bottom-0 left-[50%] translate-x-[-50%] ">
                     <div class="container py-4">
                         <div class="flex items-center">
-                            <div class="w-1/2 border-r-[1px]  pr-4 border-secondary">
-                                <p class="text-sm font-medium italic text-end mb-0 leading-none text-secondary">
+                            <div class="w-1/2 border-r-[1px]  pr-4 border-white">
+                                <p class="text-sm font-medium italic text-end mb-0 leading-none text-white">
                                     <small>Desenvolvido <br>
                                         especialmente para,<br> <strong class="font-bold">{{ $title
                                             }}</strong></small>
@@ -158,9 +162,9 @@ export default defineComponent({
                             </div>
 
                             <div class="w-1/2 flex items-center pl-4">
-                                <Icon name="logo-l8" class="w-9 h-7 fill-secondary" />
+                                <Icon name="logo-l8" class="w-9 h-7 fill-white" />
                                 <div>
-                                    <p class="fs-6 text-base font-medium italic pl-3 mb-0 leading-none text-secondary">
+                                    <p class="fs-6 text-base font-medium italic pl-3 mb-0 leading-none text-white">
                                         <small>Tudo de <br>
                                             novo</small></p>
                                 </div>
@@ -173,9 +177,9 @@ export default defineComponent({
         </div>
 
         <div class="c-sidebar-mb md:hidden" :class="[isActive ? 'active' : '']">
-            <div class="w-[80px] py-10 bg-secondary flex flex-col items-center gap-40">
+            <div class="w-[80px] py-10 z-50 bg-secondary flex flex-col items-center gap-40">
                 <p class="text-social mx-auto">Social</p>
-                <SocialMenu />
+                <SocialMenu/>
             </div>
 
             <div class="flex-1 flex items-center pb-16 pl-10 md:pl-0 relative bg-white">
@@ -188,8 +192,7 @@ export default defineComponent({
                             <div class="w-1/2 border-r-[1px]  pr-4 border-secondary/30">
                                 <p class="text-sm font-medium italic text-end mb-0 leading-none font-sans text-secondary">
                                     <small>Desenvolvido <br>
-                                        especialmente para,<br> <strong class="font-semibold ">{{ $title
-                                            }}</strong></small>
+                                        especialmente para,<br> <strong class="font-semibold ">{{ $title }}</strong></small>
                                 </p>
                             </div>
 

@@ -1,13 +1,11 @@
 <script>
 import Icon from "@/Components/Icon/Icon.vue";
-import { Link } from '@inertiajs/inertia-vue3';
+import {Link} from '@inertiajs/inertia-vue3';
 import {send} from "@/Helpers/Api";
 import FormContact from "@/Components/FormElements/FormContact.vue";
 import Modal from "@/Components/Modal/Modal.vue";
 import Input from "@/Components/FormElements/Input.vue"
-import { PhTruckTrailer } from "@phosphor-icons/vue";
-
-
+import {PhTruckTrailer} from "@phosphor-icons/vue";
 
 
 export default {
@@ -33,22 +31,29 @@ export default {
             showModal: false,
             department_id: '',
             link_drive: this.$inertia.page.props.siteConfig.l8driver,
-            isActive : false,
-            expandedDepartment: null,
-            expandedIndex: 0
+            isActive: false,
+            expandedIndex: null,
+            isDesktop: window.innerWidth >= 1024,
         }
     },
-    async mounted () {
+    async mounted() {
         this.departments = await send('department');
 
-
-        if(this.departments) {
+        if (this.departments) {
             this.email = this.departments.email1;
             this.phone = this.departments.phone1;
             this.name_department = this.departments.description;
         }
+
+        window.addEventListener('resize', this.handleResize);
+    },
+    beforeUnmount() {
+        window.removeEventListener('resize', this.handleResize);
     },
     methods: {
+        handleResize() {
+            this.isDesktop = window.innerWidth >= 1024;
+        },
         openModal(id) {
             this.showModal = true;
             this.department_id = id;
@@ -59,7 +64,9 @@ export default {
             document.body.style.overflow = "auto";
         },
         toggleDetails(index) {
-            this.expandedIndex = this.expandedIndex === index ? null : index;
+            if (this.isDesktop) {
+                this.expandedIndex = this.expandedIndex === index ? null : index;
+            }
         },
         beforeEnter(el) {
             el.style.maxHeight = "150px";
@@ -77,7 +84,6 @@ export default {
             el.style.opacity = "0";
             setTimeout(done, 100);
         },
-
     },
     computed: {
         positionClass() {
@@ -88,50 +94,65 @@ export default {
 </script>
 
 <template>
-    <section class="py-12 c-contact md:py-16 " id="contact">
-        <div class="container">
-            <h2 class="z-[3]  text-4xl font-bold lg:text-6xl relative text-white py-10">CONTATO</h2>
-            <div class="relative flex flex-col justify-between gap-10 lg:flex-row">
-                <div class="z-[3] uppercase content-start mb-14 relative">
-                    <span class="tracking-[0.5rem] text-white">downloads</span>
-                    <div class="mt-8 text-3xl font-bold tracking-[0.2rem] ">
-                        <a :href="'https://'+link_drive" class="px-3 py-3 bg-white lg:py-5 lg:px-6 hover:bg-secondary hover:text-white text-secondary">
-                                contratantes
+    <section class="w-full md:h-[120vh] h-[180vh] relative c-contact overflow-hidden" id="contact">
+        <div class="absolute inset-0 z-0 bg-cover bg-center c-contact-blur"></div>
+
+        <div class="container relative mx-auto px-4 h-full">
+            <h2 class="text-4xl lg:text-6xl 2xl:text-7xl font-bold text-white py-10" data-aos="fade-up" data-aos-delay="400">CONTATO</h2>
+
+            <div class="flex flex-col gap-10 lg:flex-row w-full h-full">
+
+                <div class="flex flex-col gap-6 relative top-[940px] 2xl:top-[700px] md:top-[400px]">
+                    <span class="uppercase tracking-[0.5rem] text-white text-lg">Downloads</span>
+                    <div class="flex flex-col gap-4 text-2xl font-bold tracking-wide">
+                        <a :href="'https://' + link_drive" class="px-4 py-3 w-1/3 sm:w-48 bg-white text-secondary hover:bg-secondary hover:text-white transition">
+                            Rádios</a>
+                        <a :href="'https://' + link_drive" class="px-4 py-3 w-1/2 sm:w-60 bg-white text-secondary hover:bg-secondary hover:text-white transition">
+                            Imprensa</a>
+                        <a :href="'https://' + link_drive" class="px-4 py-3 w-2/3 sm:w-60 bg-white text-secondary hover:bg-secondary hover:text-white transition">
+                            Contratantes
                         </a>
+
                     </div>
                 </div>
-                <div>
-                    <div v-for="(department, index) in departments" :key="index" class="z-[3] mb-10 w-full text-white content-end">
 
-                        <div class="flex items-center justify-center  gap-1 mb-2 rounded z-[2]">
-                            <button class="button_email" @click="openModal(department.id)">
-                                <Icon name="icon-mail" class="w-10 h-10 stroke-white"/>
-                                <span class="hidden font-bold sm:block ">ENVIAR E-MAIL</span>
-                            </button>
-                            <span
-                                class="w-full px-4 py-3 text-xl font-bold text-center uppercase cursor-pointer md:text-2xl bg-primary md:break-normal hover:opacity-80"
-                                @click="toggleDetails(index)">
-                                {{ department.description }}
-                            </span>
-                        </div>
-                        <transition name="expand" @before-enter="beforeEnter" @enter="enter" @leave="leave">
-                            <div v-if="expandedIndex === index" class="flex flex-col items-end gap-5 text-base md:text-xl bg-primary py-7 px-7">
-                                <div class="flex flex-col gap-2">
-                                    <span v-if="department.phone1" class="text-right hover:opacity-80 hover:ease-in-out hover:duration-300">{{ department.phone1 }}</span>
-                                    <span v-if="department.phone2" class="text-right hover:opacity-80 hover:ease-in-out hover:duration-300">{{ department.phone2 }}</span>
-                                </div>
-                                <div class="flex flex-col gap-2">
-                                    <span v-if="department.email1" class="text-right break-all">{{ department.email1 }}</span>
-                                    <span v-if="department.email2" class="text-right break-all">{{ department.email2 }}</span>
-                                </div>
+
+                <div class="flex flex-col md:top-14 2xl:top-28 gap-6 md:w-50 w-auto  md:items-end items-start md:right-0 absolute" data-aos="fade-up" data-aos-delay="400">
+                    <div
+                        v-for="(department, index) in departments"
+                        :key="index"
+                        class="flex flex-col gap-3">
+          <span
+              class="px-4 py-3 bg-primary text-white text-xl md:text-2xl font-bold uppercase text-center cursor-pointer hover:opacity-80 transition"
+              @click="toggleDetails(index)" >
+            {{ department.description }}
+          </span>
+
+                        <div
+                            v-if="!isDesktop || expandedIndex === index"
+                            class="bg-primary text-white px-6 py-5 flex flex-col gap-4 text-base md:text-xl text-right"
+                        >
+                            <div>
+                                <span v-if="department.phone1">{{ department.phone1 }}</span>
+                                <span v-if="department.phone2">{{ department.phone2 }}</span>
                             </div>
-                        </transition>
+                            <div class="break-words">
+                                <span v-if="department.email1">{{ department.email1 }}</span>
+                                <span v-if="department.email2">{{ department.email2 }}</span>
+                            </div>
+                        </div>
+                        <button
+                            class="flex items-center justify-center gap-2 px-4 py-2 w-36 10 sm:w-44 bg-black hover:opacity-80 transition"
+                            @click="openModal(department.id)">
+                            <Icon name="icon-mail" class="w-6 h-6 stroke-white"/>
+                            <span class="font-bold hidden md:block text-white">ENVIAR E-MAIL</span>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-
     </section>
+
 
     <Modal :show="showModal" :size="'md'" @close="closeModal()">
         <template #header>
@@ -141,7 +162,8 @@ export default {
         </template>
 
         <template #body>
-            <FormContact v-if="department_id" :departments="departments" :idDepartament="department_id" @close="closeModal()"/>
+            <FormContact v-if="department_id" :departments="departments" :idDepartament="department_id"
+                         @close="closeModal()"/>
         </template>
 
         <template #footer></template>
@@ -152,6 +174,16 @@ export default {
 
 <style lang="scss" scoped>
 .c-contact {
-    background: v-bind(bgDesktop) no-repeat center center !important;
+    background: v-bind(bgDesktop) no-repeat center center!important;
+    background-size: cover !important;
+
+    @media (max-width: 768px) {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        background: v-bind(bgDesktop) no-repeat -350px !important;
+        background-size: cover !important;
+    }
 }
+
+
 </style>

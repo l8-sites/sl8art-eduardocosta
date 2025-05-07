@@ -51,9 +51,9 @@ export default {
     <nav v-if="!sidebar" class="c-nav" :class="orientation === 'vertical' ? 'c-nav--vertical' : ''">
 
         <button type="button" class="c-nav__item" @click="goto('hero')">
-            <figure class="figure-menu md:flex hidden">
-                <img :src="$asset + '/images/menu01.webp'" alt="" class="w-full object-cover" />
-            </figure>
+<!--            <figure class="figure-menu md:flex hidden">-->
+<!--                <img :src="$asset + '/images/menu01.webp'" alt="" class="w-full object-cover" />-->
+<!--            </figure>-->
             Home
         </button>
 
@@ -65,30 +65,30 @@ export default {
         </a> -->
 
         <button type="button" class="c-nav__item" @click="goto('biography', 0)">
-            <figure class="figure-menu md:flex hidden">
-                <img :src="$asset + '/images/menu02.webp'" alt="" class="w-full object-cover" />
-            </figure>
+<!--            <figure class="figure-menu md:flex hidden">-->
+<!--                <img :src="$asset + '/images/menu02.webp'" alt="" class="w-full object-cover" />-->
+<!--            </figure>-->
             Biografia
         </button>
 
         <button type="button" class="c-nav__item" @click="goto('music', 0)">
-            <figure class="figure-menu md:flex hidden">
-                <img :src="$asset + '/images/menu03.webp'" alt="" class="w-full object-cover" />
-            </figure>
+<!--            <figure class="figure-menu md:flex hidden">-->
+<!--                <img :src="$asset + '/images/menu03.webp'" alt="" class="w-full object-cover" />-->
+<!--            </figure>-->
             Música
         </button>
 
         <button type="button" class="c-nav__item" @click="goto('video', 0)">
-            <figure class="figure-menu md:flex hidden">
-                <img :src="$asset + '/images/menu04.webp'" alt="" class="w-full object-cover" />
-            </figure>
+<!--            <figure class="figure-menu md:flex hidden">-->
+<!--                <img :src="$asset + '/images/menu04.webp'" alt="" class="w-full object-cover" />-->
+<!--            </figure>-->
             Vídeos
         </button>
 
         <button type="button" class="c-nav__item" @click="goto('fa', 0)">
-            <figure class="figure-menu md:flex hidden">
-                <img :src="$asset + '/images/menu05.webp'" alt="" class="w-full object-cover" />
-            </figure>
+<!--            <figure class="figure-menu md:flex hidden">-->
+<!--                <img :src="$asset + '/images/menu05.webp'" alt="" class="w-full object-cover" />-->
+<!--            </figure>-->
             Fã Clube
         </button>
 
@@ -110,9 +110,9 @@ export default {
         </a> -->
 
         <button type="button" v-if="menu.includes('contato')" class="c-nav__item" @click="goto('contact', 0)">
-            <figure class="figure-menu md:flex hidden">
-                <img :src="$asset + '/images/menu06.webp'" alt="" class="w-full object-cover" />
-            </figure>
+<!--            <figure class="figure-menu md:flex hidden">-->
+<!--                <img :src="$asset + '/images/menu06.webp'" alt="" class="w-full object-cover" />-->
+<!--            </figure>-->
             Contato
         </button>
 

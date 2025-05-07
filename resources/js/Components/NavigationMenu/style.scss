@@ -1,12 +1,12 @@
 .c-nav {
-    @apply w-full flex items-center justify-center  gap-10 md:gap-4 xl:gap-12 md:my-16;
+    @apply w-full flex flex-col items-center justify-center  gap-10 md:gap-8 md:my-16;
 
     &--vertical {
         @apply gap-4 flex-col items-start;
     }
 
     &__item {
-        @apply text-2xl font-semibold md:text-base uppercase font-secondary text-secondary leading-none cursor-pointer relative md:tracking-widest md:w-[calc(100%/8)] lg:w-[calc(100%/9)] text-center scale-100 transition-all ease-in-out duration-300;
+        @apply text-2xl md:text-2xl uppercase font-secondary lg:text-white md:text-black leading-none cursor-pointer relative md:tracking-widest text-center scale-100 transition-all ease-in-out duration-300 inline-block after:block after:w-0 after:h-[2px] after:bg-current after:transition-all after:duration-700 hover:after:w-full;
 
 
         .figure-menu {
@@ -14,16 +14,10 @@
 
         }
 
-        &::before {
-            @apply content-[''] absolute left-[50%] bottom-[2.25rem] md:h-[1.875rem] h-0 w-0.5 bg-secondary/30 rounded-full;
-        }
 
         &:hover {
-            @apply text-primary  scale-110;
+            @apply scale-110 text-primary;
 
-            &::before {
-                @apply bg-primary transition-all ease-in-out duration-200;
-            }
 
             .figure-menu{
                 @apply border-primary transition-all ease-in-out duration-200;
@@ -33,7 +27,7 @@
 }
 
 .c-header-mb {
-    @apply w-full fixed  bottom-0 flex justify-center z-[10] gap-[2px] lg:hidden;
+    @apply w-full fixed  bottom-0 flex justify-center z-[13] gap-[2px] lg:hidden;
 
     &__item {
         @apply bg-primary text-white flex-1 px-3 py-2.5 text-sm font-bold leading-none tracking-wider uppercase  flex flex-col justify-between items-center gap-1.5;

@@ -89,11 +89,13 @@ const isLargeScreen = useMediaQuery("(min-width: 768px)");
 
     <ScheduleSection />
 
-    <BiographySection  />
+    <BiographySection />
 
     <MusicSection />
 
     <VideoSection />
+
+      <GallerySection/>
 
     <ParallaxSection />
 
@@ -101,7 +103,7 @@ const isLargeScreen = useMediaQuery("(min-width: 768px)");
 
     <FanSection />
 
-    <ContactSection  />
+    <ContactSection />
 
   </App>
 </template>

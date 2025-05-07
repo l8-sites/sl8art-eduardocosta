@@ -1,15 +1,16 @@
 .c-header {
-    @apply w-full md:py-10 justify-center fixed top-0 left-0 z-10 transition-all ease-in-out duration-300 hidden md:flex;
+    @apply w-full md:py-12 bg-transparent justify-center md:fixed absolute top-0 left-0 z-10 transition-all ease-in-out duration-300 md:flex;
 
     &.active {
-        @apply py-4;
+        @apply py-4 ;
+
     }
 
 
 }
 
 .c-sidebar-desktop {
-    @apply bg-white fixed bottom-0 w-full h-full invisible z-[-9] scale-125 flex flex-col justify-center items-center opacity-0;
+    @apply bg-tertiary fixed bottom-0 w-full h-full invisible z-[-9] scale-125 flex flex-col justify-center items-center opacity-0;
     background-size: cover !important;
     -webkit-transition: 200ms ease-in;
     transition: 200ms ease-in;
@@ -56,11 +57,18 @@
         background-blend-mode: overlay;
         mix-blend-mode: normal;
         // backdrop-filter: blur(2px);
-        z-index: -1;
+
     }
 
     &__logo {
-        @apply absolute top-8 left-0 h-20 object-contain;
+        @apply absolute md:top-8 md:left-0 md:h-20 object-contain;
+
+        //@media(min-width:1200px) {
+        //    //display: block;
+        //    //position: absolute;
+        //    //top: 20px;
+        //
+        //}
     }
 }
 
@@ -73,7 +81,7 @@
     visibility: hidden;
     -webkit-transition: 200ms ease-in;
     transition: 200ms ease-in;
-    z-index: -9;
+    z-index: 12;
     flex-direction: row;
     justify-content: flex-start;
 
@@ -82,7 +90,7 @@
     &.active {
         bottom: 0;
         visibility: visible;
-        z-index: 9;
+        z-index: 12;
     }
 
     .text-social {
@@ -183,7 +191,7 @@
     @apply w-full fixed bottom-0 flex justify-center z-[10] gap-[2px] md:hidden;
 
     &__item {
-        @apply bg-white text-white flex-1 px-3 py-2.5 text-sm font-secondary font-medium flex flex-col justify-center items-center gap-0.5;
+        @apply bg-primary text-white flex-1 px-3 py-2.5 text-sm font-secondary font-medium flex flex-col justify-center items-center gap-0.5;
     }
 
     .o-hamburguer {

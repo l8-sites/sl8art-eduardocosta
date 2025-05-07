@@ -1,14 +1,18 @@
 .c-hero {
-    @apply h-screen w-full py-8;
+    @apply relative md:z-0  h-screen w-full py-8;
     background-size: cover !important;
     background-position: center;
-  
 
 
     &__deslize {
-        @apply relative flex flex-col items-center justify-end h-full ;
+        @apply relative flex flex-col items-center justify-end h-full md:top-0 -top-20;
 
         @media(min-width:1200px) {
+            background-size: cover!important;
+            image-rendering: auto!important;
+            object-fit: cover;
+
+
 
         }
     }
